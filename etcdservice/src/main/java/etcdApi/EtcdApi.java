@@ -43,7 +43,7 @@ public class EtcdApi
     {
         try
         {
-            LeaseGrantResponse response = leaseClient.grant(20).get();
+            LeaseGrantResponse response = leaseClient.grant(keepAliveTime).get();
             return response.getID();
         }
         catch (Exception e)
