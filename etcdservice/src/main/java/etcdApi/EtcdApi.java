@@ -39,30 +39,6 @@ public class EtcdApi
         leaseClient = client.getLeaseClient();
     }
 
-    public List<String> getValues(String key)
-    {
-        ByteSequence byteKey = ByteSequence.from(key, Charset.defaultCharset());
-
-        try
-        {
-            GetResponse res = kvClient.get(byteKey).get();
-
-            List<String> list = new ArrayList<>();
-
-            for (KeyValue kv : res.getKvs())
-            {
-                list.add(kv.getValue().toString(Charset.defaultCharset()));
-            }
-
-            return list;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
     private long grantLease()
     {
         try
@@ -116,11 +92,5 @@ public class EtcdApi
                 sendKeepAliveRequest();
             }
         }, 0, keepAliveTime * 1000 - 3000); // 0 - delay, refreshTime - period
-    }
-
-
-    public Map<String, String> getAllKeyValues()
-    {
-        return null;
     }
 }
